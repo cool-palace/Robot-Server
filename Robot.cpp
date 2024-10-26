@@ -54,7 +54,6 @@ Robot::Robot() {
 
 Robot::Robot(const std::vector<double>& a, const std::vector<double>& d, const std::vector<double>& alpha)
         : a_(a), d_(d), alpha_(alpha), theta_(a.size(), 0) {
-
 }
 
 std::string Robot::current_position() const {
@@ -70,4 +69,13 @@ std::string Robot::current_position() const {
 
 DH_Matrix Robot::matrix(int joint) const {
     return DH_Matrix(theta_[joint], a_[joint], d_[joint], alpha_[joint]);
+}
+
+void Robot::turn(int joint, double angle) {
+    theta_[joint] += angle;
+    if (theta_[joint] > 180) {
+        theta_[joint] -= 360;
+    } else if (theta_[joint] < -180) {
+        theta_[joint] += 360;
+    }
 }

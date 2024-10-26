@@ -33,6 +33,15 @@ void Server::handle_client(tcp::socket* socket) {
                     if (command == "pos") {
                         std::string response = robot.current_position() + "\n";
                         boost::asio::write(*socket, boost::asio::buffer(response));
+                    } else if (command.substr(0,4) == "turn") {
+                        std::istringstream iss(command);
+                        std::string turn_cmd, joint_arg, angle_arg;
+                        iss >> turn_cmd >> joint_arg >> angle_arg;
+                        int joint_number = std::stoi(joint_arg.substr(8)) - 1;
+                        double angle = std::stod(angle_arg.substr(8));
+                        robot.turn(joint_number, angle);
+                        std::string response = robot.current_position() + "\n";
+                        boost::asio::write(*socket, boost::asio::buffer(response));
                     } else {
                         std::string response = "Unknown command\n";
                         boost::asio::write(*socket, boost::asio::buffer(response), error);

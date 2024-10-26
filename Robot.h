@@ -15,7 +15,6 @@ public:
     double x() const { return x_; }
     double y() const { return y_; }
     double z() const { return z_; }
-//    friend QDebug& operator<<(QDebug debug, const Point& p);
 };
 
 class DH_Matrix {
@@ -27,7 +26,6 @@ public:
     DH_Matrix operator*(const DH_Matrix& other) const;
     DH_Matrix& operator*=(const DH_Matrix& other);
     Point coordinates() const { return Point(matrix[0][3], matrix[1][3], matrix[2][3]); }
-//    friend QDebug& operator<<(QDebug debug, const DH_Matrix& m);
 };
 
 class Robot {
@@ -35,6 +33,7 @@ public:
     Robot();
     Robot(const std::vector<double>& a, const std::vector<double>& d, const std::vector<double>& alpha);
     std::string current_position() const;
+    void turn(int joint, double angle);
 
 private:
     DH_Matrix matrix(int joint) const;
