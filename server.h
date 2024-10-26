@@ -8,6 +8,7 @@
 #include <mutex>
 #include <string>
 #include <chrono>
+#include <queue>
 #include "Robot.h"
 
 using boost::asio::ip::tcp;
@@ -19,9 +20,14 @@ private:
     void start_accept();
     void handle_accept(tcp::socket* socket, const boost::system::error_code& error);
     void handle_client(tcp::socket* socket);
+    void turn_robot(tcp::socket* socket, const std::string& command);
 
     tcp::acceptor acceptor_;
     Robot robot;
+    static std::mutex robot_mutex;
+    std::queue<std::pair<tcp::socket*, std::string>> command_queue;
+    std::condition_variable command_condition;
+    bool is_moving = false;
 };
 
 

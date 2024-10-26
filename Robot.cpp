@@ -63,7 +63,7 @@ std::string Robot::current_position() const {
     }
     Point p = result.coordinates();
     std::ostringstream oss;
-    oss << "x: " << p.x() << ", y: " << p.y() << ", z: " << p.z();
+    oss << "Current coordinates: " << "x: " << p.x() << ", y: " << p.y() << ", z: " << p.z();
     return oss.str();
 }
 
@@ -71,7 +71,7 @@ DH_Matrix Robot::matrix(int joint) const {
     return DH_Matrix(theta_[joint], a_[joint], d_[joint], alpha_[joint]);
 }
 
-void Robot::turn(int joint, double angle) {
+void Robot::turn(int joint, double angle, double speed) {
     theta_[joint] += angle;
     if (theta_[joint] > 180) {
         theta_[joint] -= 360;

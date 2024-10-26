@@ -33,7 +33,7 @@ public:
     Robot();
     Robot(const std::vector<double>& a, const std::vector<double>& d, const std::vector<double>& alpha);
     std::string current_position() const;
-    void turn(int joint, double angle);
+    void turn(int joint, double angle, double speed = 180);
 
 private:
     DH_Matrix matrix(int joint) const;
